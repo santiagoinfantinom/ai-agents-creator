@@ -8,6 +8,8 @@ import { Upload, FileText, MessageSquare, LogOut, Trash2 } from 'lucide-react';
 import { useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 
+export const dynamic = 'force-dynamic';
+
 export default function DashboardPage() {
   const [documents, setDocuments] = useState<Document[]>([]);
   const [loading, setLoading] = useState(true);
@@ -15,16 +17,6 @@ export default function DashboardPage() {
   const [user, setUser] = useState<{ id: string } | null>(null);
   const router = useRouter();
   const supabase = createClient();
-
-  useEffect(() => {
-    const getUser = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      setUser(user);
-    };
-    getUser();
-    fetchDocuments();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fetchDocuments]);
 
   const fetchDocuments = useCallback(async () => {
     try {
@@ -41,6 +33,16 @@ export default function DashboardPage() {
       setLoading(false);
     }
   }, [supabase]);
+
+  useEffect(() => {
+    const getUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      setUser(user);
+    };
+    getUser();
+    fetchDocuments();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fetchDocuments]);
 
   const onDrop = useCallback(async (acceptedFiles: File[]) => {
     if (!user) return;

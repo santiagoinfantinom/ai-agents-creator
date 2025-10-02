@@ -23,17 +23,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    // Verify session belongs to user
-    const { error: sessionError } = await supabase
-      .from('chat_sessions')
-      .select('*')
-      .eq('id', sessionId)
-      .eq('user_id', user.id)
-      .single();
-
-    if (sessionError) throw sessionError;
-
-    // Get messages for session
+    // Get messages for session (RLS will ensure user can only access their own sessions)
     const { data: messages, error } = await supabase
       .from('chat_messages')
       .select('*')

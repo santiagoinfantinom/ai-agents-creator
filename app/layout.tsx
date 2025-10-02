@@ -10,6 +10,9 @@ export const metadata: Metadata = {
     'Upload documents, create embeddings, and chat with your data using advanced RAG technology',
 };
 
+// Force dynamic rendering for all pages
+export const dynamic = 'force-dynamic';
+
 export default function RootLayout({
   children,
 }: {

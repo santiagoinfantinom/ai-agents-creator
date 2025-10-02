@@ -6,6 +6,8 @@ import { useRouter } from 'next/navigation';
 import { ChatMessage, ChatSession } from '@/types/document';
 import { Send, ArrowLeft, Plus, MessageSquare, FileText } from 'lucide-react';
 
+export const dynamic = 'force-dynamic';
+
 export default function ChatPage() {
   const [sessions, setSessions] = useState<ChatSession[]>([]);
   const [currentSession, setCurrentSession] = useState<string | null>(null);
